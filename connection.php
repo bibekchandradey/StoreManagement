@@ -7,7 +7,7 @@
      $conn = new mysqli($hostname,$username,$password, $db_name);
 
      if($conn){
-        echo "ok";
+        
      }
      else{
         echo "Not ok";

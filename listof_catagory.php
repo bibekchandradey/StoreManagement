@@ -11,8 +11,21 @@
  <body>
     <?php 
        $sql = "SELECT * FROM catagory" ;
-       $data = mysqli_fetch_assoc($queary);
-       
+       $queary = $conn->query($sql);
+       echo "<table border ='1'>  <tr><th>Catagory</th><th>Entry Date</th><th>Action</th> </tr>";
+      
+       while ($data = mysqli_fetch_assoc($queary)){
+          $catagoryId = $data["catagory_id"];
+          $catagoryName = $data["catagory_name"];
+          $catagoryEntry = $data["catagory_entrydate"];
+
+         echo "<tr>
+                  <td>$catagoryName</td> 
+                  <td>$catagoryEntry</td> 
+                  <td><a href='edit_catagory.php?id=$catagoryId' >Edit</a></td>
+               </tr>";
+       }
+      echo "</table>";
     ?>
  </body>
  </html>
