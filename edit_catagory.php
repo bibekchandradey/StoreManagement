@@ -7,27 +7,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add catagory</title>
+    <title>editcatagory</title>
 </head>
 <body>
     <?php
-        if(isset($_GET['catagory_name'])){
-            $catagory_name = $_GET['catagory_name'];
-            $catagory_entrydate = $_GET['catagory_entrydate'];
-            $sql = "INSERT INTO catagory(catagory_name,catagory_entrydate)
-                    VALUES('$catagory_name', '$catagory_entrydate')";
+         if(isset($_GET['id'])){
+            $getid = $_GET['id'];
 
-            if($conn->query($sql) == true){
-                echo "Data Submited";
+            $sql = "SELECT * FROM catagory WHERE catagory_id = $getid";
+            $queary = $conn->query($sql);
+            $data = mysqli_fetch_assoc($queary);
+
+            $catagoryId =        $data["catagory_id"];
+            $catagoryName =      $data['catagory_name'];
+            $catagoryEntrydate = $data['catagory_entrydate'];
+        }
+
+        if(isset($_GET['catagory_name'])){
+
+            $new_catagory_name     = $_GET['catagory_name'];
+            $new_catagory_entrydate = $_GET['catagory_entrydate'];
+            $new_id = $_GET['catagory_id'];
+
+            $sql1 =   "UPDATE catagory SET
+                      catagory_name = '$new_catagory_name',
+                      catagory_entrydate = '$new_catagory_entrydate' WHERE catagory_id = '$new_id'";
+
+            if ($conn->query($sql1) == TRUE ){
+                echo 'Update Successfully';
             }else{
-                echo "Data Send fail";
+                echo 'Not Updated';
             }
         }
+        
     ?>
-    <form action="add_catagory.php" method="GET">\
-        <input type="text" name="catagory_name"><br><br>
-        <input type="date" name="catagory_entrydate"><br><br>
-        <input type="submit" value="submit">
+    <form action="edit_catagory.php" method="GET">
+        <input type="text" name="catagory_name" value="<?php echo $catagoryName ?>"><br><br>
+        <input type="text" name="catagory_entrydate" value="<?php echo $catagoryEntrydate ?> "><br><br>
+        <input type="text" name="catagory_id" value="<?php echo $catagoryId ?> ">
+        <input type="submit" value="Update">
     </form>
 </body>
 </html>
