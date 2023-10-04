@@ -29,26 +29,27 @@
           $new_product_code =       $_GET['product_code'];
           $new_product_entrydate =  $_GET['product_entrydate'];
           $new_id =                 $_GET['product_id'];
-          echo $_GET['product_catagory'];
+          
 
           $sql1 =   "UPDATE product SET
                       product_name =       '$new_product_name',
                       product_catagory =   '$new_product_catagory', 
                       product_code =       '$new_product_code',
                       product_entrydate =  '$new_product_entrydate'
-                      WHERE product_id = '$new_id'";
+                      WHERE product_id =   '$new_id'";
 
-            if ($conn->query($sql1) == TRUE ){
-                echo 'Update Successfully';
+            if ($conn->query($sql1) == true ){
+                echo "Update Successfully";
+                
             }else{
+                
                 echo 'Not Updated';
             }
        }
     ?>
     <?php 
-        $sql = "SELECT * FROM catagory";
-        $quary = $conn->query($sql);
-        $data = mysqli_fetch_array($quary);
+        $sql2 = "SELECT * FROM catagory";
+        $quary2 = $conn->query($sql2);
     ?>
 
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
@@ -57,11 +58,17 @@
         Product Catagory: <br>
         <select name="product_catagory" id=""> 
             <?php
-             while( $data = mysqli_fetch_array($quary)){
-               $catagory_id = $data['catagory_id'];
-               $catagory_name = $data['catagory_name'];
+             while( $data2 = mysqli_fetch_array($quary2)){
+               $catagory_id = $data2['catagory_id'];
+               $catagory_name = $data2['catagory_name'];
                ?>
-               <option value='<?php $catagory_id?>' <?php if($catagory_id == $productCatagory) { echo 'selected' ;} ?>  > <?php echo $catagory_name; ?>  </option>
+               <option value='<?php echo $catagory_id ;?>'
+                  <?php 
+                    if($catagory_id == $productCatagory) {
+                      echo 'selected' ;
+                     } ?> > 
+                  <?php echo $catagory_name; ?>  
+               </option>
             <?php
              }
             ?>
